@@ -14,7 +14,6 @@ services:
   Shared.QueryHandlers:
     class: ../../../context/shared/infrastructure/query-bus/QueryHandlers
     arguments: ['!tagged queryHandler']
-
   Shared.Domain.QueryBus:
     class: ../../../context/shared/infrastructure/query-bus/InMemoryQueryBus
     arguments: ['@Shared.QueryHandlers']

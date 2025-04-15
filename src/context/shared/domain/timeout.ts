@@ -9,5 +9,7 @@ export const timeout = async <T>(promise: Promise<T>, time: number, errorMessage
   return Promise.race([
     promise,
     timeoutPromise,
-  ]).finally(() => clearTimeout(timer));
+  ]).finally(() => {
+    return clearTimeout(timer)
+  });
 };
