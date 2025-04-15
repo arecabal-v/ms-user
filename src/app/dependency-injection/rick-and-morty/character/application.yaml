@@ -1,0 +1,11 @@
+services:
+  RickAndMorty.Character.Repository:
+    class: ../../../../context/rick-and-morty/character/infrastructure/repository/ApiCharacterRepository
+  
+  RickAndMorty.Character.Finder:
+    class: ../../../../context/rick-and-morty/character/application/CharacterFinder
+    arguments: ['@RickAndMorty.Character.Repository', '@Redis.Persistance.Repository']
+
+  RickAndMorty.Character.Find.Controller:
+    class: '../../../controllers/rick-and-morty/find/FindCharacterController'
+    arguments: ['@RickAndMorty.Character.Finder']
