@@ -1,0 +1,10 @@
+services:
+  UserCreator:
+    class: "@context/user/application/UserCreator"
+   
+  Create.User.Command.Handler:
+    class: "@context/user/application/CreateUserCommandHandler"
+    arguments: ['@UserCreator']
+    tags:
+      - { name: 'commandHandler'}
+

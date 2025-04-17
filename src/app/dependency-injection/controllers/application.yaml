@@ -1,0 +1,4 @@
+services:
+  Controller.Create.User:
+    class: '@app/controllers/user/CreateUserController'
+    arguments: ['@Shared.Domain.CommandBus']

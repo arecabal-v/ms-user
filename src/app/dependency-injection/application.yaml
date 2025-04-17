@@ -1,3 +1,5 @@
 imports:
   - { resource: ./shared/application.yaml }
   - { resource: ./health/application.yaml }
+  - { resource: ./controllers/application.yaml }
+  - { resource: ./user/application.yaml }
