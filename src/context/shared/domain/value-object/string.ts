@@ -1,6 +1,6 @@
-export abstract class StringValueObject {
-  constructor(readonly value: string) {}
+import { ValueObject } from "./ValueObject";
 
+export abstract class StringValueObject extends ValueObject<string> {
   equalsTo(anotherValue: string): boolean {
     return this.value === anotherValue;
   }

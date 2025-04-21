@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@context/shared/domain/AggregateRoot';
-import { Collection, MongoClient } from 'mongodb';
+import { Collection, MongoClient, ObjectId } from 'mongodb';
 
 export abstract class MongoRepository<T extends AggregateRoot> {
   constructor(private _client: Promise<MongoClient>) { }
@@ -19,6 +19,6 @@ export abstract class MongoRepository<T extends AggregateRoot> {
 
     const document = { ...aggregateRoot.toPrimitives(), _id: id, id: undefined };
 
-    await collection.updateOne({ _id: id }, { $set: document }, { upsert: true });
+    await collection.updateOne({ _id: new ObjectId(id) }, { $set: document }, { upsert: true });
   }
 }

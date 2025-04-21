@@ -1,6 +1,6 @@
-export abstract class NumberValueObject {
-  constructor(readonly value: number) {}
+import { ValueObject } from "./ValueObject";
 
+export abstract class NumberValueObject extends ValueObject<number> {
   equalsTo(otherNumber: number): boolean {
     return this.value === otherNumber;
   }

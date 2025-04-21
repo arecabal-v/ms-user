@@ -1,12 +1,6 @@
 import { StringValueObject } from './string';
 
 export abstract class DateValueObject extends StringValueObject {
-  constructor(readonly value: string) {
-    super(value);
-    this.checkDateIsValue(value);
-    this.value = this.format(value);
-  }
-
   private checkDateIsValue(date: string): void {
     if (!!Number.isNaN(new Date(date).getTime())) {
       this.throwErrorForInvalidDate(date);
