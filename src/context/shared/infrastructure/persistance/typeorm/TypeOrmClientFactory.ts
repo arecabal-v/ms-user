@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { TypeOrmConfig } from './TypeOrmConfig';
+import { UserEntity } from '@context/user/infrastructure/typeorm/UserEntity';
 
 export class TypeOrmClientFactory {
   static async createClient(contextName: string, config: TypeOrmConfig): Promise<DataSource> {
@@ -12,7 +13,9 @@ export class TypeOrmClientFactory {
         username: config.username,
         password: config.password,
         database: config.database,
-        entities: [__dirname + '/../../../../**/**/infrastructure/persistence/typeorm/*{.js,.ts}'],
+        entities: [
+          UserEntity,
+        ],
         synchronize: true,
         logging: true
       });
@@ -23,6 +26,7 @@ export class TypeOrmClientFactory {
       if (existingDataSource) {
         return existingDataSource;
       }
+      console.error('Database connection error:', error);
       throw error;
     }
   }

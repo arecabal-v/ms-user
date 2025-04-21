@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import container from '@app/dependency-injection';
 import Logger from '../../context/shared/infrastructure/logger/WinstonLogger';
 const logger: Logger = container.get('Shared.Logger');

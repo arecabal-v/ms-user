@@ -1,9 +1,10 @@
-import { CreateUserCommand } from "../domain/CreateUserCommand";
+import { UserRepository } from "../domain/contracts/UserRepository";
+import { User } from "../domain/User";
 
 export class UserCreator {
-    constructor() {}
+    constructor(private repository: UserRepository) {}
 
-    async run(command: CreateUserCommand): Promise<void> {
-        console.log(`User created: ${command.id} - ${command.name} - ${command.email} - ${command.phone}`);
+    async run(user: User): Promise<void> {
+        return this.repository.add(user);
     }
 }

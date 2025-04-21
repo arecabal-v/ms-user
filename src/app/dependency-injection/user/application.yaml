@@ -1,6 +1,11 @@
 services:
+  UserRepository:
+    class: "@context/user/infrastructure/persistance/TypeOrmUserRepository"
+    arguments: ['@Shared.DBConnection']
+
   UserCreator:
     class: "@context/user/application/UserCreator"
+    arguments: ['@UserRepository']
    
   Create.User.Command.Handler:
     class: "@context/user/application/CreateUserCommandHandler"
