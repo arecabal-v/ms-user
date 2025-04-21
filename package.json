@@ -22,7 +22,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "npm run build:clean && npm run build:tsc && npm run build:di",
-    "build:clean": "rm -r dist; exit 0",
+    "build:clean": "rm -rf dist || true",
     "build:tsc": "tsc -p tsconfig.prod.json",
     "build:di": "cpy 'src/**/*.{json,yaml}' dist/src",
     "start": "node -r tsconfig-paths/register -r ts-node/register ./dist/src/app/server/Index.js",
@@ -49,11 +49,13 @@
     "http-status": "1.5.2",
     "husky": "7.0.4",
     "kafkajs": "^2.2.4",
-    "mongodb": "^4.7.0",
+    "mongodb": "^6.15.0",
     "node-dependency-injection": "2.7.3",
     "redis": "^4.6.7",
     "tsconfig-paths": "4.0.0",
     "tsconfig-paths-jest": "0.0.1",
+    "typeorm": "^0.3.22",
+    "uuid": "^11.1.0",
     "uuid-validate": "^0.0.3",
     "winston": "3.7.2",
     "zod": "^3.20.2",
@@ -78,5 +80,7 @@
     "tsconfig-paths": "^4.0.0",
     "tsconfig-paths-jest": "^0.0.1",
     "typescript": "^4.4.3"
-  }
+  },
+  "emitDecoratorMetadata": true,
+  "experimentalDecorators": true
 }

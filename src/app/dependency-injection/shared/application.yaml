@@ -1,19 +1,35 @@
 services:
-
+  # logger
   Shared.Logger:
     class: ../../../context/shared/infrastructure/logger/WinstonLogger
     arguments: []
 
+  # command bus
   Shared.CommandHandlers:
     class: ../../../context/shared/infrastructure/command-bus/CommandHandlers
     arguments: ['!tagged commandHandler']
   Shared.Domain.CommandBus:
     class: '../../../context/shared/infrastructure/command-bus/InMemoryCommandBus'
     arguments: ['@Shared.CommandHandlers']
-  
+
+  # query bus
   Shared.QueryHandlers:
     class: ../../../context/shared/infrastructure/query-bus/QueryHandlers
     arguments: ['!tagged queryHandler']
   Shared.Domain.QueryBus:
-    class: ../../../context/shared/infrastructure/query-bus/InMemoryQueryBus
+    class: '../../../context/shared/infrastructure/query-bus/InMemoryQueryBus'
     arguments: ['@Shared.QueryHandlers']
+
+  # database
+  Shared.TypeOrmConfig:
+    class: ../../../context/shared/infrastructure/persistance/typeorm/TypeOrmConfig
+    factory:
+      class: ../../../context/shared/infrastructure/persistance/typeorm/TypeOrmConfigFactory
+      method: createConfig
+    arguments: []
+
+  Shared.DBConnection:
+    factory:
+      class: ../../../context/shared/infrastructure/persistance/typeorm/TypeOrmClientFactory
+      method: createClient
+    arguments: ['ms-user', '@Shared.TypeOrmConfig']

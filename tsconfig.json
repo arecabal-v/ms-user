@@ -14,6 +14,7 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "experimentalDecorators": true,
+    "skipLibCheck": true,
     "paths": {
       "@app/*": [
         "src/app/*"
