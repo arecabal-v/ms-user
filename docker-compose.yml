@@ -1,9 +1,46 @@
 version: "3.8"
+
+# Common configuration for both development and production
+x-app-common: &app-common
+  restart: always
+  depends_on:
+    postgres:
+      condition: service_healthy
+  networks:
+    - ms-user-network
+
 services:
-  app:
-    build: .
-    container_name: ms-user-app
-    restart: always
+  # Development service configuration
+  app-dev:
+    <<: *app-common
+    build:
+      context: .
+      target: build
+    container_name: ms-user-app-dev
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=ms_user
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev:debug
+    profiles:
+      - dev
+
+  # Production service configuration
+  app-prod:
+    <<: *app-common
+    build:
+      context: .
+      target: production
+    container_name: ms-user-app-prod
     ports:
       - "3000:3000"
     environment:
@@ -13,11 +50,10 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=ms_user
-    depends_on:
-      - postgres
-    networks:
-      - ms-user-network
+    profiles:
+      - prod
 
+  # Database configuration (common for both environments)
   postgres:
     image: postgres:14
     container_name: ms-user-postgres
@@ -28,9 +64,19 @@ services:
     ports:
       - "5432:5432"
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - ms-user-network
 
 networks:
   ms-user-network:
     driver: bridge
+
+volumes:
+  postgres_data:
